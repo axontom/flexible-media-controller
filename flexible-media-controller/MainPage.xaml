@@ -7,8 +7,96 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
     <Grid>
-        <Button x:Name="nextBtn" Content="Next" Click="nextBtn_Click" Margin="0,364,0,0" VerticalAlignment="Top" HorizontalAlignment="Center" Height="168" Width="481" />
+        <Grid.RowDefinitions>
+            <RowDefinition Height="500" MinHeight="500" />
+            <RowDefinition Height="30" MinHeight="30" />
+            <RowDefinition Height="30" MinHeight="30" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="100" MinWidth="100" />
+            <ColumnDefinition Width="100" MinWidth="100" />
+            <ColumnDefinition Width="100" MinWidth="100" />
+            <ColumnDefinition Width="100" MinWidth="100" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <!--#region Media Info -->
+        <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60" MinHeight="60" />
+                <RowDefinition Height="60" MinHeight="60" />
+                <RowDefinition Height="60" MinHeight="60" />
+                <RowDefinition Height="60" MinHeight="60" />
+                <RowDefinition Height="60" MinHeight="60" />
+                <RowDefinition Height="60" MinHeight="60" />
+                <RowDefinition Height="60" MinHeight="60" />
+                <RowDefinition Height="60" MinHeight="60" />
+                <RowDefinition Height="60" MinHeight="60" />
+                <RowDefinition Height="60" MinHeight="60" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100" MinWidth="100" />
+                <ColumnDefinition Width="100" MinWidth="100" />
+                <ColumnDefinition Width="100" MinWidth="100" />
+                <ColumnDefinition Width="100" MinWidth="100" />
+                <ColumnDefinition Width="100" MinWidth="100" />
+                <ColumnDefinition Width="100" MinWidth="100" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <TextBox x:Name="titleTB"       Grid.Column="0" Grid.ColumnSpan="4"
+                     Grid.Row="0" PlaceholderText="not found" Header="Title" 
+                     IsReadOnly="True" VerticalAlignment="Center" 
+                     HorizontalAlignment="Stretch" Margin="5 1"/>
+            <TextBox x:Name="subtitleTB"    Grid.Column="0" Grid.ColumnSpan="4"
+                     Grid.Row="1" PlaceholderText="not found" Header="Subtitle"
+                     IsReadOnly="True" VerticalAlignment="Center" 
+                     HorizontalAlignment="Stretch" Margin="5 1"/>
+            <TextBox x:Name="artistTB"      Grid.Column="0" Grid.ColumnSpan="4"
+                     Grid.Row="2" PlaceholderText="not found" Header="Artist" 
+                     IsReadOnly="True" VerticalAlignment="Center" 
+                     HorizontalAlignment="Stretch" Margin="5 1"/>
+            <TextBox x:Name="genresTB"      Grid.Column="0" Grid.ColumnSpan="4"
+                     Grid.Row="3" PlaceholderText="not found" Header="Genres" 
+                     IsReadOnly="True" VerticalAlignment="Center" 
+                     HorizontalAlignment="Stretch" Margin="5 1"/>
+            <TextBox x:Name="albumTitleTB"  Grid.Column="0" Grid.ColumnSpan="2"
+                     Grid.Row="4" PlaceholderText="not found" 
+                     Header="Album Title"       IsReadOnly="True" 
+                     VerticalAlignment="Center" HorizontalAlignment="Stretch" 
+                     Margin="5 1"/>
+            <TextBox x:Name="trackTB"       Grid.Column="0" Grid.ColumnSpan="2"
+                     Grid.Row="5" PlaceholderText="not found" Header="Track"             
+                     IsReadOnly="True" VerticalAlignment="Center" 
+                     HorizontalAlignment="Stretch" Margin="5 1"/>
+            <TextBox x:Name="albumArtistTB" Grid.Column="0" Grid.ColumnSpan="2"
+                     Grid.Row="6" PlaceholderText="not found" 
+                     Header="Album Artist" IsReadOnly="True" 
+                     VerticalAlignment="Center" HorizontalAlignment="Stretch"
+                     Margin="5 1"/>
+            <TextBox x:Name="trackCountTB"  Grid.Column="0" Grid.ColumnSpan="2"
+                     Grid.Row="7" PlaceholderText="not found" 
+                     Header="Album Track Count" IsReadOnly="True" 
+                     VerticalAlignment="Center" HorizontalAlignment="Stretch"
+                     Margin="5 1"/>
+            <Image x:Name="thumbnailImg" Width="180" Height="180" 
+                   VerticalAlignment="Center" HorizontalAlignment="Center" 
+                   Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="4"
+                   Grid.RowSpan="4" />
+        </Grid>
+        <!--#endregion-->
+        <!--#region control buttons-->
+        <Button x:Name="prevBtn" Content="Prev" Grid.Row="1" Grid.Column="0" 
+                Click="prevBtn_Click" VerticalAlignment="Stretch" 
+                HorizontalAlignment="Stretch" Margin="5 1" />
+        <Button x:Name="playToggleBtn" Content="Pause" Grid.Row="1" 
+                Grid.Column="1" Click="playToggleBtn_Click" 
+                VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
+                Margin="5 1" />
+        <Button x:Name="nextBtn" Content="Next" Grid.Row="1" Grid.Column="2" 
+                Click="nextBtn_Click" VerticalAlignment="Stretch" 
+                HorizontalAlignment="Stretch" Margin="5 1" />
+        <!--#endregion-->
     </Grid>
 </Page>

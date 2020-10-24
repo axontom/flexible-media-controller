@@ -8,14 +8,14 @@
 
   <Identity
     Name="65fdb5c6-cede-4970-9bcc-d8d520bd93d3"
-    Publisher="CN=axontom"
+    Publisher="CN=Tomasz Rusinowicz"
     Version="1.0.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="65fdb5c6-cede-4970-9bcc-d8d520bd93d3" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>flexible-media-controller</DisplayName>
-    <PublisherDisplayName>axontom</PublisherDisplayName>
+    <PublisherDisplayName>Tomasz Rusinowicz</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
