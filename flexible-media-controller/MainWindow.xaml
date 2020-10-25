@@ -1,12 +1,11 @@
-﻿<Page
-    x:Class="flexible_media_controller.MainPage"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:flexible_media_controller"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+﻿<Window x:Class="flexible_media_controller.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:flexible_media_controller"
+        mc:Ignorable="d"
+        Title="Flexible Media Controller" Height="600" Width="600">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="500" MinHeight="500" />
@@ -45,41 +44,46 @@
                 <ColumnDefinition Width="100" MinWidth="100" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
+            <Label   Content="Title" HorizontalAlignment="Left" 
+                     VerticalAlignment="Top" Grid.Column="0" Grid.Row="0" />
             <TextBox x:Name="titleTB"       Grid.Column="0" Grid.ColumnSpan="4"
-                     Grid.Row="0" PlaceholderText="not found" Header="Title" 
-                     IsReadOnly="True" VerticalAlignment="Center" 
+                     Grid.Row="0" IsReadOnly="True" VerticalAlignment="Center" 
                      HorizontalAlignment="Stretch" Margin="5 1"/>
+            <Label   Content="Subtitle" HorizontalAlignment="Left" 
+                     VerticalAlignment="Top" Grid.Column="0" Grid.Row="1" />
             <TextBox x:Name="subtitleTB"    Grid.Column="0" Grid.ColumnSpan="4"
-                     Grid.Row="1" PlaceholderText="not found" Header="Subtitle"
-                     IsReadOnly="True" VerticalAlignment="Center" 
+                     Grid.Row="1" IsReadOnly="True" VerticalAlignment="Center" 
                      HorizontalAlignment="Stretch" Margin="5 1"/>
+            <Label   Content="Artist" HorizontalAlignment="Left" 
+                     VerticalAlignment="Top" Grid.Column="0" Grid.Row="2" />
             <TextBox x:Name="artistTB"      Grid.Column="0" Grid.ColumnSpan="4"
-                     Grid.Row="2" PlaceholderText="not found" Header="Artist" 
-                     IsReadOnly="True" VerticalAlignment="Center" 
+                     Grid.Row="2" IsReadOnly="True" VerticalAlignment="Center" 
                      HorizontalAlignment="Stretch" Margin="5 1"/>
+            <Label   Content="Genres" HorizontalAlignment="Left" 
+                     VerticalAlignment="Top" Grid.Column="0" Grid.Row="3" />
             <TextBox x:Name="genresTB"      Grid.Column="0" Grid.ColumnSpan="4"
-                     Grid.Row="3" PlaceholderText="not found" Header="Genres" 
-                     IsReadOnly="True" VerticalAlignment="Center" 
+                     Grid.Row="3" IsReadOnly="True" VerticalAlignment="Center" 
                      HorizontalAlignment="Stretch" Margin="5 1"/>
+            <Label   Content="Album Title" HorizontalAlignment="Left" 
+                     VerticalAlignment="Top" Grid.Column="0" Grid.Row="4" />
             <TextBox x:Name="albumTitleTB"  Grid.Column="0" Grid.ColumnSpan="2"
-                     Grid.Row="4" PlaceholderText="not found" 
-                     Header="Album Title"       IsReadOnly="True" 
-                     VerticalAlignment="Center" HorizontalAlignment="Stretch" 
-                     Margin="5 1"/>
-            <TextBox x:Name="trackTB"       Grid.Column="0" Grid.ColumnSpan="2"
-                     Grid.Row="5" PlaceholderText="not found" Header="Track"             
-                     IsReadOnly="True" VerticalAlignment="Center" 
+                     Grid.Row="4" IsReadOnly="True" VerticalAlignment="Center"
                      HorizontalAlignment="Stretch" Margin="5 1"/>
+            <Label   Content="Track" HorizontalAlignment="Left" 
+                     VerticalAlignment="Top" Grid.Column="0" Grid.Row="5" />
+            <TextBox x:Name="trackTB"       Grid.Column="0" Grid.ColumnSpan="2"
+                     Grid.Row="5" IsReadOnly="True" VerticalAlignment="Center" 
+                     HorizontalAlignment="Stretch" Margin="5 1"/>
+            <Label   Content="Album Artist" HorizontalAlignment="Left" 
+                     VerticalAlignment="Top" Grid.Column="0" Grid.Row="6" />
             <TextBox x:Name="albumArtistTB" Grid.Column="0" Grid.ColumnSpan="2"
-                     Grid.Row="6" PlaceholderText="not found" 
-                     Header="Album Artist" IsReadOnly="True" 
-                     VerticalAlignment="Center" HorizontalAlignment="Stretch"
-                     Margin="5 1"/>
+                     Grid.Row="6" IsReadOnly="True" VerticalAlignment="Center"
+                     HorizontalAlignment="Stretch" Margin="5 1"/>
+            <Label   Content="Track Count" HorizontalAlignment="Left" 
+                     VerticalAlignment="Top" Grid.Column="0" Grid.Row="7" />
             <TextBox x:Name="trackCountTB"  Grid.Column="0" Grid.ColumnSpan="2"
-                     Grid.Row="7" PlaceholderText="not found" 
-                     Header="Album Track Count" IsReadOnly="True" 
-                     VerticalAlignment="Center" HorizontalAlignment="Stretch"
-                     Margin="5 1"/>
+                     Grid.Row="7" IsReadOnly="True" VerticalAlignment="Center" 
+                     HorizontalAlignment="Stretch" Margin="5 1"/>
             <Image x:Name="thumbnailImg" Width="180" Height="180" 
                    VerticalAlignment="Center" HorizontalAlignment="Center" 
                    Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="4"
@@ -99,4 +103,4 @@
                 HorizontalAlignment="Stretch" Margin="5 1" />
         <!--#endregion-->
     </Grid>
-</Page>
+</Window>

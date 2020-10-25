@@ -3,54 +3,23 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30611.23
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "flexible-media-controller", "flexible-media-controller\flexible-media-controller.csproj", "{771086BC-B616-4C70-AF1F-0988B19BF46F}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4F8CF2FF-6D9B-4F66-9D12-5C1132D82560}"
-	ProjectSection(SolutionItems) = preProject
-		.editorconfig = .editorconfig
-	EndProjectSection
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "flexible-media-controller", "flexible-media-controller\flexible-media-controller.csproj", "{C9746D14-AC0D-411F-AC82-8780CA5CAE00}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|ARM = Debug|ARM
-		Debug|ARM64 = Debug|ARM64
-		Debug|x64 = Debug|x64
-		Debug|x86 = Debug|x86
-		Release|ARM = Release|ARM
-		Release|ARM64 = Release|ARM64
-		Release|x64 = Release|x64
-		Release|x86 = Release|x86
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{771086BC-B616-4C70-AF1F-0988B19BF46F}.Debug|ARM.ActiveCfg = Debug|ARM
-		{771086BC-B616-4C70-AF1F-0988B19BF46F}.Debug|ARM.Build.0 = Debug|ARM
-		{771086BC-B616-4C70-AF1F-0988B19BF46F}.Debug|ARM.Deploy.0 = Debug|ARM
-		{771086BC-B616-4C70-AF1F-0988B19BF46F}.Debug|ARM64.ActiveCfg = Debug|ARM64
-		{771086BC-B616-4C70-AF1F-0988B19BF46F}.Debug|ARM64.Build.0 = Debug|ARM64
-		{771086BC-B616-4C70-AF1F-0988B19BF46F}.Debug|ARM64.Deploy.0 = Debug|ARM64
-		{771086BC-B616-4C70-AF1F-0988B19BF46F}.Debug|x64.ActiveCfg = Debug|x64
-		{771086BC-B616-4C70-AF1F-0988B19BF46F}.Debug|x64.Build.0 = Debug|x64
-		{771086BC-B616-4C70-AF1F-0988B19BF46F}.Debug|x64.Deploy.0 = Debug|x64
-		{771086BC-B616-4C70-AF1F-0988B19BF46F}.Debug|x86.ActiveCfg = Debug|x86
-		{771086BC-B616-4C70-AF1F-0988B19BF46F}.Debug|x86.Build.0 = Debug|x86
-		{771086BC-B616-4C70-AF1F-0988B19BF46F}.Debug|x86.Deploy.0 = Debug|x86
-		{771086BC-B616-4C70-AF1F-0988B19BF46F}.Release|ARM.ActiveCfg = Release|ARM
-		{771086BC-B616-4C70-AF1F-0988B19BF46F}.Release|ARM.Build.0 = Release|ARM
-		{771086BC-B616-4C70-AF1F-0988B19BF46F}.Release|ARM.Deploy.0 = Release|ARM
-		{771086BC-B616-4C70-AF1F-0988B19BF46F}.Release|ARM64.ActiveCfg = Release|ARM64
-		{771086BC-B616-4C70-AF1F-0988B19BF46F}.Release|ARM64.Build.0 = Release|ARM64
-		{771086BC-B616-4C70-AF1F-0988B19BF46F}.Release|ARM64.Deploy.0 = Release|ARM64
-		{771086BC-B616-4C70-AF1F-0988B19BF46F}.Release|x64.ActiveCfg = Release|x64
-		{771086BC-B616-4C70-AF1F-0988B19BF46F}.Release|x64.Build.0 = Release|x64
-		{771086BC-B616-4C70-AF1F-0988B19BF46F}.Release|x64.Deploy.0 = Release|x64
-		{771086BC-B616-4C70-AF1F-0988B19BF46F}.Release|x86.ActiveCfg = Release|x86
-		{771086BC-B616-4C70-AF1F-0988B19BF46F}.Release|x86.Build.0 = Release|x86
-		{771086BC-B616-4C70-AF1F-0988B19BF46F}.Release|x86.Deploy.0 = Release|x86
+		{C9746D14-AC0D-411F-AC82-8780CA5CAE00}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9746D14-AC0D-411F-AC82-8780CA5CAE00}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9746D14-AC0D-411F-AC82-8780CA5CAE00}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9746D14-AC0D-411F-AC82-8780CA5CAE00}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {90DC5431-8848-4C27-8559-B69B2D523DB7}
+		SolutionGuid = {E7D4C1E3-C6FE-4584-BA62-556B2DFA8E36}
 	EndGlobalSection
 EndGlobal
