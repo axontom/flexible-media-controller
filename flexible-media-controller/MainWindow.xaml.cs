@@ -17,6 +17,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Xml;
+using System.Xml.Serialization;
+using Windows.ApplicationModel.Contacts;
 using Windows.Graphics.Imaging;
 using Windows.Media.Control;
 using Windows.System;
@@ -25,24 +28,62 @@ using BitmapImage = System.Windows.Media.Imaging.BitmapImage;
 
 namespace flexible_media_controller
 {
+    public struct HotkeySave
+    {
+        public List<HotkeyCombination> Hotkeys { get; set; }
+        public List<List<Key>> Combinations { get; set; }
+        public HotkeySave(List<HotkeyCombination> list)
+        {
+            Hotkeys = list;
+            Combinations = new List<List<Key>>(
+                list.Select(e => (e.Keys.ToList())));
+        }
+        public List<HotkeyCombination> ToHotkeyList()
+        {
+            var list = Hotkeys;
+            for (int i = 0; i < list.Count && i < Combinations.Count; i++)
+                list[i].Keys = new SortedSet<Key>(Combinations[i]);
+            return list;
+        }
+    }
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
+        private const string hotkeysSaveFile = "hotkeys.xml";
         private GlobalSystemMediaTransportControlsSession gsmtcsm;
         private KeyboardCapture keyboardCapture;
         private BindingList<HotkeyCombination> hotkeys;
         private List<HotkeyCombination> savedHotkeys;
         public MainWindow()
         {
-            hotkeys = new BindingList<HotkeyCombination>(
-                EmptyHotkeyCombinationList());
-            savedHotkeys = EmptyHotkeyCombinationList();
+            if (!LoadHotkeysFromFile())
+                savedHotkeys = EmptyHotkeyCombinationList();
+            hotkeys = new BindingList<HotkeyCombination>(savedHotkeys);
             keyboardCapture = new KeyboardCapture();
+            SaveBtn_Click();
             InitializeComponent();
             HotKeyItemsControl.ItemsSource = hotkeys;
             ReloadSMTCSession();
+        }
+        private void SaveHotkeysToFile()
+        {
+            var serializer = new XmlSerializer(typeof(HotkeySave));
+            using (var writer = new XmlTextWriter(hotkeysSaveFile, Encoding.UTF8))
+                serializer.Serialize(writer, new HotkeySave(savedHotkeys));
+        }
+        private bool LoadHotkeysFromFile()
+        {
+            if (!File.Exists(hotkeysSaveFile)) return false;
+
+            HotkeySave save;
+            var serializer = new XmlSerializer(typeof(HotkeySave));
+            using (var reader = new XmlTextReader(hotkeysSaveFile))
+                save = (HotkeySave)serializer.Deserialize(reader);
+            save.Hotkeys = EmptyHotkeyCombinationList();
+            savedHotkeys = save.ToHotkeyList();
+            return true;
         }
         private List<HotkeyCombination> EmptyHotkeyCombinationList()
         {
@@ -178,6 +219,7 @@ namespace flexible_media_controller
             int idx = textbox.Tag as int? ?? -1;
             if (idx == -1) return;
 
+            keyboardCapture.Enabled = false;
             if (!hotkeys[idx].Capturing)
             {
                 hotkeys[idx].Reset();
@@ -193,9 +235,10 @@ namespace flexible_media_controller
             if (idx == -1) return;
 
             hotkeys[idx].Capturing = false;
+            keyboardCapture.Enabled = true;
         }
-
-        private void SaveBtn_Click(object sender, RoutedEventArgs e)
+        private void SaveBtn_Click(object sender = null,
+            RoutedEventArgs e = null)
         {
             keyboardCapture.ClearCombinations();
             foreach (var comb in hotkeys)
@@ -205,11 +248,16 @@ namespace flexible_media_controller
                 foreach (var key in comb.Keys)
                     vkComb.Add((VirtualKey)KeyInterop.VirtualKeyFromKey(key));
                 if (!keyboardCapture.AddCombination(
-                    new SortedSet<VirtualKey>(comb.Keys.Select<Key, VirtualKey>(k => (
-                        (VirtualKey)KeyInterop.VirtualKeyFromKey(k)))), comb.KeyCapturedProc))
+                        new SortedSet<VirtualKey>(
+                            comb.Keys.Select<Key, VirtualKey>(k => (
+                                (VirtualKey)KeyInterop.VirtualKeyFromKey(k)))),
+                        comb.KeyCapturedProc))
+                {
                     comb.Reset();
+                }
             }
             savedHotkeys = hotkeys.ToList();
+            SaveHotkeysToFile();
         }
 
         private void UnbindAllBtn_Click(object sender, RoutedEventArgs e)

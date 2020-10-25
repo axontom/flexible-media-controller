@@ -24,6 +24,7 @@ namespace flexible_media_controller
         private Dictionary<VirtualKey, bool> keyStatus;
 
         public List<KeyValuePair<SortedSet<VirtualKey>, KeyCapturedProc>> Combinations { get; }
+        public bool Enabled { get; set; } = true;
 
         public delegate void KeyCapturedProc();
         private delegate IntPtr LowLevelKeyboardProc(int nCode, IntPtr wParam,
@@ -103,6 +104,7 @@ namespace flexible_media_controller
         private async void ProcessKey(List<KeyValuePair<SortedSet<VirtualKey>,
             KeyCapturedProc>> list, Dictionary<VirtualKey, bool> status)
         {
+            if (!Enabled) return;
             await Task.Run(() =>
             {
                 foreach (var comb in list)

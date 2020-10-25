@@ -6,6 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Xml.Serialization;
 
 namespace flexible_media_controller
 {
@@ -18,6 +19,7 @@ namespace flexible_media_controller
         }
 
         private SortedSet<Key> _keys;
+        [XmlIgnore]
         public SortedSet<Key> Keys
         {
             get { return _keys; }
@@ -32,7 +34,7 @@ namespace flexible_media_controller
         public string Text
         {
             get { return _text; }
-            private set
+            set
             {
                 if (value != _text)
                 {
@@ -42,6 +44,7 @@ namespace flexible_media_controller
             }
         }
         public string Label { get; set; }
+        [XmlIgnore]
         public KeyboardCapture.KeyCapturedProc KeyCapturedProc { get; set; }
         private bool _capturing;
         public bool Capturing
