@@ -5,102 +5,189 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:flexible_media_controller"
         mc:Ignorable="d"
-        Title="Flexible Media Controller" Height="600" Width="600">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="500" MinHeight="500" />
-            <RowDefinition Height="30" MinHeight="30" />
-            <RowDefinition Height="30" MinHeight="30" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="100" MinWidth="100" />
-            <ColumnDefinition Width="100" MinWidth="100" />
-            <ColumnDefinition Width="100" MinWidth="100" />
-            <ColumnDefinition Width="100" MinWidth="100" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
-        <!--#region Media Info -->
-        <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" >
-            <Grid.RowDefinitions>
-                <RowDefinition Height="60" MinHeight="60" />
-                <RowDefinition Height="60" MinHeight="60" />
-                <RowDefinition Height="60" MinHeight="60" />
-                <RowDefinition Height="60" MinHeight="60" />
-                <RowDefinition Height="60" MinHeight="60" />
-                <RowDefinition Height="60" MinHeight="60" />
-                <RowDefinition Height="60" MinHeight="60" />
-                <RowDefinition Height="60" MinHeight="60" />
-                <RowDefinition Height="60" MinHeight="60" />
-                <RowDefinition Height="60" MinHeight="60" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="100" MinWidth="100" />
-                <ColumnDefinition Width="100" MinWidth="100" />
-                <ColumnDefinition Width="100" MinWidth="100" />
-                <ColumnDefinition Width="100" MinWidth="100" />
-                <ColumnDefinition Width="100" MinWidth="100" />
-                <ColumnDefinition Width="100" MinWidth="100" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <Label   Content="Title" HorizontalAlignment="Left" 
-                     VerticalAlignment="Top" Grid.Column="0" Grid.Row="0" />
-            <TextBox x:Name="titleTB"       Grid.Column="0" Grid.ColumnSpan="4"
-                     Grid.Row="0" IsReadOnly="True" VerticalAlignment="Center" 
-                     HorizontalAlignment="Stretch" Margin="5 1"/>
-            <Label   Content="Subtitle" HorizontalAlignment="Left" 
-                     VerticalAlignment="Top" Grid.Column="0" Grid.Row="1" />
-            <TextBox x:Name="subtitleTB"    Grid.Column="0" Grid.ColumnSpan="4"
-                     Grid.Row="1" IsReadOnly="True" VerticalAlignment="Center" 
-                     HorizontalAlignment="Stretch" Margin="5 1"/>
-            <Label   Content="Artist" HorizontalAlignment="Left" 
-                     VerticalAlignment="Top" Grid.Column="0" Grid.Row="2" />
-            <TextBox x:Name="artistTB"      Grid.Column="0" Grid.ColumnSpan="4"
-                     Grid.Row="2" IsReadOnly="True" VerticalAlignment="Center" 
-                     HorizontalAlignment="Stretch" Margin="5 1"/>
-            <Label   Content="Genres" HorizontalAlignment="Left" 
-                     VerticalAlignment="Top" Grid.Column="0" Grid.Row="3" />
-            <TextBox x:Name="genresTB"      Grid.Column="0" Grid.ColumnSpan="4"
-                     Grid.Row="3" IsReadOnly="True" VerticalAlignment="Center" 
-                     HorizontalAlignment="Stretch" Margin="5 1"/>
-            <Label   Content="Album Title" HorizontalAlignment="Left" 
-                     VerticalAlignment="Top" Grid.Column="0" Grid.Row="4" />
-            <TextBox x:Name="albumTitleTB"  Grid.Column="0" Grid.ColumnSpan="2"
-                     Grid.Row="4" IsReadOnly="True" VerticalAlignment="Center"
-                     HorizontalAlignment="Stretch" Margin="5 1"/>
-            <Label   Content="Track" HorizontalAlignment="Left" 
-                     VerticalAlignment="Top" Grid.Column="0" Grid.Row="5" />
-            <TextBox x:Name="trackTB"       Grid.Column="0" Grid.ColumnSpan="2"
-                     Grid.Row="5" IsReadOnly="True" VerticalAlignment="Center" 
-                     HorizontalAlignment="Stretch" Margin="5 1"/>
-            <Label   Content="Album Artist" HorizontalAlignment="Left" 
-                     VerticalAlignment="Top" Grid.Column="0" Grid.Row="6" />
-            <TextBox x:Name="albumArtistTB" Grid.Column="0" Grid.ColumnSpan="2"
-                     Grid.Row="6" IsReadOnly="True" VerticalAlignment="Center"
-                     HorizontalAlignment="Stretch" Margin="5 1"/>
-            <Label   Content="Track Count" HorizontalAlignment="Left" 
-                     VerticalAlignment="Top" Grid.Column="0" Grid.Row="7" />
-            <TextBox x:Name="trackCountTB"  Grid.Column="0" Grid.ColumnSpan="2"
-                     Grid.Row="7" IsReadOnly="True" VerticalAlignment="Center" 
-                     HorizontalAlignment="Stretch" Margin="5 1"/>
-            <Image x:Name="thumbnailImg" Width="180" Height="180" 
-                   VerticalAlignment="Center" HorizontalAlignment="Center" 
-                   Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="4"
-                   Grid.RowSpan="4" />
-        </Grid>
-        <!--#endregion-->
-        <!--#region control buttons-->
-        <Button x:Name="prevBtn" Content="Prev" Grid.Row="1" Grid.Column="0" 
-                Click="prevBtn_Click" VerticalAlignment="Stretch" 
-                HorizontalAlignment="Stretch" Margin="5 1" />
-        <Button x:Name="playToggleBtn" Content="Pause" Grid.Row="1" 
-                Grid.Column="1" Click="playToggleBtn_Click" 
-                VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
-                Margin="5 1" />
-        <Button x:Name="nextBtn" Content="Next" Grid.Row="1" Grid.Column="2" 
-                Click="nextBtn_Click" VerticalAlignment="Stretch" 
-                HorizontalAlignment="Stretch" Margin="5 1" />
-        <!--#endregion-->
-    </Grid>
+        ResizeMode="CanResize"
+        Title="Flexible Media Controller" Height="800" Width="435" 
+        MinWidth="435" MinHeight="200" MaxWidth="435">
+    <TabControl TabStripPlacement="Top" >
+        <TabItem Header="Informations" Width="100">
+            <ScrollViewer HorizontalScrollBarVisibility="Hidden" 
+                          VerticalScrollBarVisibility="Auto">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="500" MinHeight="500" />
+                        <RowDefinition Height="30" MinHeight="30" />
+                        <RowDefinition Height="30" MinHeight="30" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100" MinWidth="100" />
+                        <ColumnDefinition Width="100" MinWidth="100" />
+                        <ColumnDefinition Width="100" MinWidth="100" />
+                        <ColumnDefinition Width="100" MinWidth="100" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <!--#region Media Info -->
+                    <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="60" MinHeight="60" />
+                            <RowDefinition Height="60" MinHeight="60" />
+                            <RowDefinition Height="60" MinHeight="60" />
+                            <RowDefinition Height="60" MinHeight="60" />
+                            <RowDefinition Height="60" MinHeight="60" />
+                            <RowDefinition Height="60" MinHeight="60" />
+                            <RowDefinition Height="60" MinHeight="60" />
+                            <RowDefinition Height="60" MinHeight="60" />
+                            <RowDefinition Height="60" MinHeight="60" />
+                            <RowDefinition Height="60" MinHeight="60" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100" MinWidth="100" />
+                            <ColumnDefinition Width="100" MinWidth="100" />
+                            <ColumnDefinition Width="100" MinWidth="100" />
+                            <ColumnDefinition Width="100" MinWidth="100" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Title" HorizontalAlignment="Left" 
+                               VerticalAlignment="Top" Grid.Column="0" 
+                               Grid.Row="0" />
+                        <TextBox x:Name="titleTB" Grid.Column="0"
+                                 Grid.ColumnSpan="4" Grid.Row="0" 
+                                 IsReadOnly="True" VerticalAlignment="Center" 
+                                 HorizontalAlignment="Stretch" Margin="5 1"/>
+                        <Label Content="Subtitle" HorizontalAlignment="Left" 
+                               VerticalAlignment="Top" Grid.Column="0" 
+                               Grid.Row="1" />
+                        <TextBox x:Name="subtitleTB" Grid.Column="0" 
+                                 Grid.ColumnSpan="4" Grid.Row="1" 
+                                 IsReadOnly="True" VerticalAlignment="Center" 
+                                 HorizontalAlignment="Stretch" Margin="5 1"/>
+                        <Label Content="Artist" HorizontalAlignment="Left" 
+                               VerticalAlignment="Top" Grid.Column="0" 
+                               Grid.Row="2" />
+                        <TextBox x:Name="artistTB" Grid.Column="0"
+                                 Grid.ColumnSpan="4" Grid.Row="2" 
+                                 IsReadOnly="True" VerticalAlignment="Center" 
+                                 HorizontalAlignment="Stretch" Margin="5 1"/>
+                        <Label Content="Genres" HorizontalAlignment="Left" 
+                               VerticalAlignment="Top" Grid.Column="0" 
+                               Grid.Row="3" />
+                        <TextBox x:Name="genresTB" Grid.Column="0" 
+                                 Grid.ColumnSpan="4" Grid.Row="3" 
+                                 IsReadOnly="True" VerticalAlignment="Center" 
+                                 HorizontalAlignment="Stretch" Margin="5 1"/>
+                        <Label Content="Album Title" HorizontalAlignment="Left" 
+                               VerticalAlignment="Top" Grid.Column="0" 
+                               Grid.Row="4" />
+                        <TextBox x:Name="albumTitleTB"  Grid.Column="0" 
+                                 Grid.ColumnSpan="2" Grid.Row="4" 
+                                 IsReadOnly="True" VerticalAlignment="Center"
+                                 HorizontalAlignment="Stretch" Margin="5 1"/>
+                        <Label Content="Track" HorizontalAlignment="Left" 
+                               VerticalAlignment="Top" Grid.Column="0" 
+                               Grid.Row="5" />
+                        <TextBox x:Name="trackTB" Grid.Column="0" 
+                                 Grid.ColumnSpan="2" Grid.Row="5" 
+                                 IsReadOnly="True" VerticalAlignment="Center" 
+                                 HorizontalAlignment="Stretch" Margin="5 1"/>
+                        <Label Content="Album Artist" 
+                               HorizontalAlignment="Left" 
+                               VerticalAlignment="Top" Grid.Column="0"
+                               Grid.Row="6" />
+                        <TextBox x:Name="albumArtistTB" Grid.Column="0" 
+                                 Grid.ColumnSpan="2" Grid.Row="6" 
+                                 IsReadOnly="True" VerticalAlignment="Center"
+                                 HorizontalAlignment="Stretch" Margin="5 1"/>
+                        <Label Content="Track Count" HorizontalAlignment="Left" 
+                               VerticalAlignment="Top" Grid.Column="0" 
+                               Grid.Row="7" />
+                        <TextBox x:Name="trackCountTB"  Grid.Column="0" 
+                                 Grid.ColumnSpan="2" Grid.Row="7" 
+                                 IsReadOnly="True" VerticalAlignment="Center" 
+                                 HorizontalAlignment="Stretch" Margin="5 1"/>
+                        <Image x:Name="thumbnailImg" Width="180" Height="180" 
+                               VerticalAlignment="Center" 
+                               HorizontalAlignment="Center" Grid.Column="2"
+                               Grid.ColumnSpan="2" Grid.Row="4" Grid.RowSpan="3" />
+                    </Grid>
+                    <!--#endregion-->
+                    <!--#region Control Buttons-->
+                    <Button x:Name="prevBtn" Content="Prev" Grid.Row="1" 
+                            Grid.Column="0" Click="PrevBtn_Click" 
+                            VerticalAlignment="Stretch" 
+                            HorizontalAlignment="Stretch" Margin="5 1" />
+                    <Button x:Name="playToggleBtn" Content="Pause" Grid.Row="1" 
+                            Grid.Column="1" Click="PlayToggleBtn_Click" 
+                            VerticalAlignment="Stretch" 
+                            HorizontalAlignment="Stretch" Margin="5 1" />
+                    <Button x:Name="nextBtn" Content="Next" Grid.Row="1" 
+                            Grid.Column="2" Click="NextBtn_Click" 
+                            VerticalAlignment="Stretch" 
+                            HorizontalAlignment="Stretch" Margin="5 1" />
+                    <!--#endregion-->
+                    <Button x:Name="refreshBtn" Content="Refresh" Grid.Row="1" 
+                            Grid.Column="3" Click="RefreshBtn_Click"
+                            VerticalAlignment="Stretch"
+                            HorizontalAlignment="Stretch" Margin="5 1" />
+                </Grid>
+            </ScrollViewer>
+        </TabItem>
+        <TabItem Header="Hotkeys" Width="100">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="30" MinHeight="30" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100" MinWidth="100" />
+                    <ColumnDefinition Width="100" MinWidth="100" />
+                    <ColumnDefinition Width="100" MinWidth="100" />
+                    <ColumnDefinition Width="100" MinWidth="100" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <!--#region Hotkeys -->
+                <ScrollViewer HorizontalScrollBarVisibility="Hidden" 
+                              VerticalScrollBarVisibility="Visible"
+                              Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5">
+                    <ItemsControl ItemsSource="{Binding}" x:Name="HotKeyItemsControl">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="300" MinWidth="300"/>
+                                        <ColumnDefinition Width="100" MinWidth="100"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="60"/>
+                                    </Grid.RowDefinitions>
+                                    <Label Content="{Binding Path=Label, Mode=OneWay}" HorizontalAlignment="Left" 
+                                           VerticalAlignment="Top" Grid.Column="0" />
+                                    <TextBox IsReadOnly="True" VerticalAlignment="Center" Grid.Column="0"
+                                             HorizontalAlignment="Stretch" Margin="5 1"
+                                             Tag="{Binding Path=Id, Mode=OneWay}"
+                                             KeyDown="HotkeyTB_KeyDown" Text="{Binding Path=Text, Mode=OneWay}"
+                                             GotFocus="HotkeyTB_GotFocus" LostFocus="HotkeyTB_LostFocus"/>
+                                    <Button Content="Reset" Grid.Column="1"
+                                            Margin="5 1"
+                                            HorizontalAlignment="Stretch" 
+                                            VerticalAlignment="Center" Tag="{Binding Path=Id, Mode=OneWay}"
+                                            Click="HotkeyResetBtn_Click"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                </ScrollViewer>
+                <!--#endregion-->
+                <Button x:Name="UnbindAllBtn" Content="Unbind All" Grid.Row="1" Grid.Column="0" 
+                        Click="UnbindAllBtn_Click" VerticalAlignment="Stretch" 
+                        HorizontalAlignment="Stretch" Margin="5 1" />
+                <Button x:Name="DiscardBtn" Content="Discard" Grid.Row="1" Grid.Column="1" 
+                        Click="DiscardBtn_Click" VerticalAlignment="Stretch" 
+                        HorizontalAlignment="Stretch" Margin="5 1" />
+                <Button x:Name="SaveBtn" Content="Save" Grid.Row="1" Grid.Column="3" 
+                        Click="SaveBtn_Click" VerticalAlignment="Stretch" 
+                        HorizontalAlignment="Stretch" Margin="5 1" />
+            </Grid>
+        </TabItem>
+    </TabControl>
 </Window>

@@ -7,11 +7,12 @@ using System.Runtime.InteropServices;
 using System.ServiceModel.Channels;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Windows.System;
 
 namespace flexible_media_controller
 {
-    class KeyboardCapture
+    public class KeyboardCapture
     {
         private const int WM_KEYDOWN = 0x0100;
         private const int WM_KEYUP = 0x0101;
@@ -38,8 +39,8 @@ namespace flexible_media_controller
                 {
                     keyStatus.Add(key, false);
                 }
-                catch (System.ArgumentException ex)
-                { //Skip repetitions in VirtualKey Enum
+                catch (System.ArgumentException)
+                { //Skip repetitions in Key Enum
                 }
             }
             Combinations = new List<KeyValuePair<SortedSet<VirtualKey>,
@@ -84,7 +85,7 @@ namespace flexible_media_controller
             if (nCode >= 0 && wParam == (IntPtr)WM_KEYDOWN)
             {
                 int vkCode = Marshal.ReadInt32(lParam);
-                if (Enum.IsDefined(typeof(VirtualKey), vkCode))
+                if (Enum.IsDefined(typeof(Key), vkCode))
                 {
                     keyStatus[(VirtualKey)vkCode] = true;
                     ProcessKey(Combinations, keyStatus);
@@ -93,7 +94,7 @@ namespace flexible_media_controller
             else if (nCode >= 0 && wParam == (IntPtr)WM_KEYUP)
             {
                 int vkCode = Marshal.ReadInt32(lParam);
-                if (Enum.IsDefined(typeof(VirtualKey), vkCode))
+                if (Enum.IsDefined(typeof(Key), vkCode))
                     keyStatus[(VirtualKey)vkCode] = false;
             }
             return CallNextHookEx(_hookID, nCode, wParam, lParam);
@@ -127,7 +128,14 @@ namespace flexible_media_controller
             if (CombinationExists(combination)) return false;
             var pair = new KeyValuePair<SortedSet<VirtualKey>,
                                         KeyCapturedProc>(combination, handler);
-            Combinations.Add(pair);
+            try
+            {
+                Combinations.Add(pair);
+            }
+            catch (System.ArgumentException)
+            {
+                return false;
+            }
             return true;
         }
 

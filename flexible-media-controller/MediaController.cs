@@ -7,7 +7,7 @@ using Windows.Media.Control;
 
 namespace flexible_media_controller
 {
-    class MediaController
+    public static class MediaController
     {
         public static GlobalSystemMediaTransportControlsSession Session
         {
@@ -69,7 +69,7 @@ namespace flexible_media_controller
             if (!Initialized) return;
             Session.TryRewindAsync();
         }
-        public static void FastForward(Windows.Media.MediaPlaybackAutoRepeatMode mode)
+        public static void AutoRepeatMode(Windows.Media.MediaPlaybackAutoRepeatMode mode)
         {
             if (!Initialized) return;
             Session.TryChangeAutoRepeatModeAsync(mode);
