@@ -25,6 +25,8 @@ using Windows.Media.Control;
 using Windows.System;
 using Windows.UI.Xaml.Media.Imaging;
 using BitmapImage = System.Windows.Media.Imaging.BitmapImage;
+using NotifyIcon = System.Windows.Forms.NotifyIcon;
+using System.Drawing;
 
 namespace flexible_media_controller
 {
@@ -56,8 +58,16 @@ namespace flexible_media_controller
         private KeyboardCapture keyboardCapture;
         private BindingList<HotkeyCombination> hotkeys;
         private List<HotkeyCombination> savedHotkeys;
+        private NotifyIcon notifyIcon;
+        public bool MinimizeToTray { get; set; } = true;
         public MainWindow()
         {
+            notifyIcon = new NotifyIcon()
+            {
+                Icon = new Icon(@"..\..\fmc.ico"),
+                Visible = true,
+            };
+            notifyIcon.DoubleClick += NotifyIconDoubleClick;
             if (!LoadHotkeysFromFile())
                 savedHotkeys = EmptyHotkeyCombinationList();
             hotkeys = new BindingList<HotkeyCombination>(savedHotkeys);
@@ -66,6 +76,17 @@ namespace flexible_media_controller
             InitializeComponent();
             HotKeyItemsControl.ItemsSource = hotkeys;
             ReloadSMTCSession();
+        }
+        private void NotifyIconDoubleClick(object sender, EventArgs args)
+        {
+            Show();
+            WindowState = WindowState.Normal;
+        }
+        protected override void OnStateChanged(EventArgs e)
+        {
+            if (WindowState == WindowState.Minimized && MinimizeToTray)
+                Hide();
+            base.OnStateChanged(e);
         }
         private void SaveHotkeysToFile()
         {
@@ -133,11 +154,11 @@ namespace flexible_media_controller
                 using (var raStream = await mediaProperties.Thumbnail.OpenReadAsync())
                 using (var stream = raStream.AsStream())
                 {
-                     BitmapImage bitmap = new BitmapImage();
-                     bitmap.BeginInit();
-                     bitmap.StreamSource = stream;
-                     bitmap.EndInit();
-                     thumbnailImg.Source = bitmap;
+                    BitmapImage bitmap = new BitmapImage();
+                    bitmap.BeginInit();
+                    bitmap.StreamSource = stream;
+                    bitmap.EndInit();
+                    thumbnailImg.Source = bitmap;
                 }
             });
         }
@@ -151,23 +172,23 @@ namespace flexible_media_controller
             PlaybackInfoChangedEventArgs e = null)
         {
             var info = gsmtcsm.GetPlaybackInfo();
-            Dispatcher.Invoke( () =>
-            {
-                prevBtn.IsEnabled = info.Controls.IsPreviousEnabled;
-                playToggleBtn.IsEnabled = info.Controls.IsPlayPauseToggleEnabled;
-                nextBtn.IsEnabled = info.Controls.IsNextEnabled;
-                switch (info.PlaybackStatus)
-                {
-                    case GlobalSystemMediaTransportControlsSessionPlaybackStatus.Playing:
-                        playToggleBtn.Content = "Pause";
-                        break;
-                    case GlobalSystemMediaTransportControlsSessionPlaybackStatus.Paused:
-                    case GlobalSystemMediaTransportControlsSessionPlaybackStatus.Stopped:
-                    case GlobalSystemMediaTransportControlsSessionPlaybackStatus.Closed:
-                        playToggleBtn.Content = "Play";
-                        break;
-                }
-            });
+            Dispatcher.Invoke(() =>
+           {
+               prevBtn.IsEnabled = info.Controls.IsPreviousEnabled;
+               playToggleBtn.IsEnabled = info.Controls.IsPlayPauseToggleEnabled;
+               nextBtn.IsEnabled = info.Controls.IsNextEnabled;
+               switch (info.PlaybackStatus)
+               {
+                   case GlobalSystemMediaTransportControlsSessionPlaybackStatus.Playing:
+                       playToggleBtn.Content = "Pause";
+                       break;
+                   case GlobalSystemMediaTransportControlsSessionPlaybackStatus.Paused:
+                   case GlobalSystemMediaTransportControlsSessionPlaybackStatus.Stopped:
+                   case GlobalSystemMediaTransportControlsSessionPlaybackStatus.Closed:
+                       playToggleBtn.Content = "Play";
+                       break;
+               }
+           });
         }
         private void NextBtn_Click(object sender, RoutedEventArgs e)
         {

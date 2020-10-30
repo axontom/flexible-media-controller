@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:flexible_media_controller"
         mc:Ignorable="d"
-        ResizeMode="CanResize"
+        ResizeMode="CanResize" Icon="fmc.ico"
+        x:Name="mainWindow"
         Title="Flexible Media Controller" Height="800" Width="435" 
         MinWidth="435" MinHeight="200" MaxWidth="435">
     <TabControl TabStripPlacement="Top" >
@@ -188,6 +189,29 @@
                         Click="SaveBtn_Click" VerticalAlignment="Stretch" 
                         HorizontalAlignment="Stretch" Margin="5 1" />
             </Grid>
+        </TabItem>
+        <TabItem Header="Settings" Width="100">
+            <ScrollViewer HorizontalScrollBarVisibility="Hidden" 
+                          VerticalScrollBarVisibility="Auto">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40" MinHeight="40" />
+                        <RowDefinition Height="40" MinHeight="40" />
+                        <RowDefinition Height="40" MinHeight="40" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <CheckBox Content="Minimize to system tray" Grid.Column="1"
+                              Grid.Row="0" HorizontalContentAlignment="Left"
+                              IsChecked="{Binding ElementName=mainWindow,
+                                                  Path=MinimizeToTray,
+                                                  Mode=TwoWay}"
+                              Margin="5" VerticalAlignment="Center"
+                              HorizontalAlignment="Left"/>
+                </Grid>
+            </ScrollViewer>
         </TabItem>
     </TabControl>
 </Window>
