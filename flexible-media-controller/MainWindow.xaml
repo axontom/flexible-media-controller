@@ -129,6 +129,10 @@
                             Grid.Column="0" Click="RepeatModeBtn_Click"
                             VerticalAlignment="Stretch" 
                             HorizontalAlignment="Stretch" Margin="5 1" />
+                    <Button x:Name="shuffleBtn" Content="Shuffle" Grid.Row="2" 
+                            Grid.Column="1" Click="ShuffleBtn_Click"
+                            VerticalAlignment="Stretch" 
+                            HorizontalAlignment="Stretch" Margin="5 1" />
                     <!--#endregion-->
                     <Button x:Name="refreshBtn" Content="Refresh" Grid.Row="1" 
                             Grid.Column="3" Click="RefreshBtn_Click"

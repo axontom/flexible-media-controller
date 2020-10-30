@@ -126,7 +126,9 @@ namespace flexible_media_controller
                 new HotkeyCombination(MediaController.ChannelDown, 10,
                                       "Channel Down"),
                 new HotkeyCombination(RepeatModeToggle, 11,
-                                      "Toggle Repeat Mode")
+                                      "Toggle Repeat Mode"),
+                new HotkeyCombination(ToggleShuffle, 12,
+                                      "Toggle Shuffle")
             };
         }
         private void ReloadSMTCSession()
@@ -194,6 +196,9 @@ namespace flexible_media_controller
                 repeatModeBtn.Content = "Repeat: " + Enum.GetName(
                     typeof(Windows.Media.MediaPlaybackAutoRepeatMode),
                     info.AutoRepeatMode);
+                shuffleBtn.IsEnabled = info.Controls.IsShuffleEnabled;
+                shuffleBtn.Content = "Shuffle: " + 
+                    (info.IsShuffleActive == true ? "On" : "Off");
             });
         }
         private void NextBtn_Click(object sender, RoutedEventArgs e)
@@ -316,6 +321,22 @@ namespace flexible_media_controller
         public void RepeatModeToggle()
         {
             RepeatModeBtn_Click();
+        }
+
+        private void ShuffleBtn_Click(object sender = null,
+                                      RoutedEventArgs e = null)
+        {
+            var info = gsmtcsm.GetPlaybackInfo();
+            if (info.IsShuffleActive is null)
+            {
+                UpdatePlaybackInfo();
+                return;
+            }
+            MediaController.Shuffle(info.IsShuffleActive == false);
+        }
+        public void ToggleShuffle()
+        {
+            ShuffleBtn_Click();
         }
     }
 }
