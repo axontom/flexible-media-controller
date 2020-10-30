@@ -27,6 +27,8 @@ using Windows.UI.Xaml.Media.Imaging;
 using BitmapImage = System.Windows.Media.Imaging.BitmapImage;
 using NotifyIcon = System.Windows.Forms.NotifyIcon;
 using System.Drawing;
+using System.Security.Principal;
+using System.Diagnostics;
 
 namespace flexible_media_controller
 {
@@ -59,9 +61,34 @@ namespace flexible_media_controller
         private BindingList<HotkeyCombination> hotkeys;
         private List<HotkeyCombination> savedHotkeys;
         private NotifyIcon notifyIcon;
+        private bool runOnStartUp;
+
         public bool MinimizeToTray { get; set; } = true;
+        public bool RunOnStartUp
+        { 
+            get => runOnStartUp;
+            set
+            {
+                if (App.HasAdminRights == false)
+                {
+                    MessageBoxResult result = MessageBox.Show(this,
+                        "Setting this option requires administrative rights.\n"
+                        + "Do you want to restart this application as Administrator?",
+                        "Insufficient Privileges", MessageBoxButton.YesNo,
+                        MessageBoxImage.Question);
+                    if (result == MessageBoxResult.Yes)
+                        App.RestartAsAdmin();
+                }
+                else
+                {
+                    App.RunOnStartUp = value;
+                    runOnStartUp = App.RunOnStartUp;
+                }   
+            }
+        }
         public MainWindow()
         {
+            runOnStartUp = App.RunOnStartUp;
             notifyIcon = new NotifyIcon()
             {
                 Icon = new Icon(@"..\..\fmc.ico"),
@@ -197,7 +224,7 @@ namespace flexible_media_controller
                     typeof(Windows.Media.MediaPlaybackAutoRepeatMode),
                     info.AutoRepeatMode);
                 shuffleBtn.IsEnabled = info.Controls.IsShuffleEnabled;
-                shuffleBtn.Content = "Shuffle: " + 
+                shuffleBtn.Content = "Shuffle: " +
                     (info.IsShuffleActive == true ? "On" : "Off");
             });
         }

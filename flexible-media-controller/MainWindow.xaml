@@ -209,16 +209,21 @@
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="11*" />
-                        <ColumnDefinition Width="65*"/>
-                        <ColumnDefinition Width="345*"/>
+                        <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <CheckBox Content="Minimize to system tray"
                               Grid.Row="0" HorizontalContentAlignment="Left"
                               IsChecked="{Binding ElementName=mainWindow,
                                                   Path=MinimizeToTray,
                                                   Mode=TwoWay}"
-                              Margin="5,12,0,12" VerticalAlignment="Center"
+                              Margin="5" VerticalAlignment="Center"
+                              HorizontalAlignment="Left" Grid.ColumnSpan="3"/>
+                    <CheckBox Content="Run on startup"
+                              Grid.Row="1" HorizontalContentAlignment="Left"
+                              IsChecked="{Binding ElementName=mainWindow,
+                                                  Path=RunOnStartUp,
+                                                  Mode=TwoWay}"
+                              Margin="5" VerticalAlignment="Center"
                               HorizontalAlignment="Left" Grid.ColumnSpan="3"/>
                 </Grid>
             </ScrollViewer>
