@@ -124,7 +124,9 @@ namespace flexible_media_controller
                 new HotkeyCombination(MediaController.ChannelUp, 9,
                                       "Channel Up"),
                 new HotkeyCombination(MediaController.ChannelDown, 10,
-                                      "Channel Down")
+                                      "Channel Down"),
+                new HotkeyCombination(RepeatModeToggle, 11,
+                                      "Toggle Repeat Mode")
             };
         }
         private void ReloadSMTCSession()
@@ -173,22 +175,26 @@ namespace flexible_media_controller
         {
             var info = gsmtcsm.GetPlaybackInfo();
             Dispatcher.Invoke(() =>
-           {
-               prevBtn.IsEnabled = info.Controls.IsPreviousEnabled;
-               playToggleBtn.IsEnabled = info.Controls.IsPlayPauseToggleEnabled;
-               nextBtn.IsEnabled = info.Controls.IsNextEnabled;
-               switch (info.PlaybackStatus)
-               {
-                   case GlobalSystemMediaTransportControlsSessionPlaybackStatus.Playing:
-                       playToggleBtn.Content = "Pause";
-                       break;
-                   case GlobalSystemMediaTransportControlsSessionPlaybackStatus.Paused:
-                   case GlobalSystemMediaTransportControlsSessionPlaybackStatus.Stopped:
-                   case GlobalSystemMediaTransportControlsSessionPlaybackStatus.Closed:
-                       playToggleBtn.Content = "Play";
-                       break;
-               }
-           });
+            {
+                prevBtn.IsEnabled = info.Controls.IsPreviousEnabled;
+                playToggleBtn.IsEnabled = info.Controls.IsPlayPauseToggleEnabled;
+                nextBtn.IsEnabled = info.Controls.IsNextEnabled;
+                switch (info.PlaybackStatus)
+                {
+                    case GlobalSystemMediaTransportControlsSessionPlaybackStatus.Playing:
+                        playToggleBtn.Content = "Pause";
+                        break;
+                    case GlobalSystemMediaTransportControlsSessionPlaybackStatus.Paused:
+                    case GlobalSystemMediaTransportControlsSessionPlaybackStatus.Stopped:
+                    case GlobalSystemMediaTransportControlsSessionPlaybackStatus.Closed:
+                        playToggleBtn.Content = "Play";
+                        break;
+                }
+                repeatModeBtn.IsEnabled = info.Controls.IsRepeatEnabled;
+                repeatModeBtn.Content = "Repeat: " + Enum.GetName(
+                    typeof(Windows.Media.MediaPlaybackAutoRepeatMode),
+                    info.AutoRepeatMode);
+            });
         }
         private void NextBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -292,6 +298,24 @@ namespace flexible_media_controller
         {
             for (int i = 0; i < hotkeys.Count; i++)
                 hotkeys[i].Keys = savedHotkeys[i].Keys;
+        }
+
+        private void RepeatModeBtn_Click(object sender = null,
+                                         RoutedEventArgs e = null)
+        {
+            var info = gsmtcsm.GetPlaybackInfo();
+            if (info.AutoRepeatMode is null)
+            {
+                UpdatePlaybackInfo();
+                return;
+            }
+            MediaController.AutoRepeatMode(
+                (Windows.Media.MediaPlaybackAutoRepeatMode)
+                (((int)info.AutoRepeatMode + 1) % 3));
+        }
+        public void RepeatModeToggle()
+        {
+            RepeatModeBtn_Click();
         }
     }
 }

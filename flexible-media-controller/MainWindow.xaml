@@ -125,6 +125,10 @@
                             Grid.Column="2" Click="NextBtn_Click" 
                             VerticalAlignment="Stretch" 
                             HorizontalAlignment="Stretch" Margin="5 1" />
+                    <Button x:Name="repeatModeBtn" Content="Repeat" Grid.Row="2" 
+                            Grid.Column="0" Click="RepeatModeBtn_Click"
+                            VerticalAlignment="Stretch" 
+                            HorizontalAlignment="Stretch" Margin="5 1" />
                     <!--#endregion-->
                     <Button x:Name="refreshBtn" Content="Refresh" Grid.Row="1" 
                             Grid.Column="3" Click="RefreshBtn_Click"
@@ -173,10 +177,10 @@
                                             HorizontalAlignment="Stretch" 
                                             VerticalAlignment="Center" Tag="{Binding Path=Id, Mode=OneWay}"
                                             Click="HotkeyResetBtn_Click"/>
-                                    </Grid>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
                 </ScrollViewer>
                 <!--#endregion-->
                 <Button x:Name="UnbindAllBtn" Content="Unbind All" Grid.Row="1" Grid.Column="0" 
@@ -201,15 +205,17 @@
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="11*" />
+                        <ColumnDefinition Width="65*"/>
+                        <ColumnDefinition Width="345*"/>
                     </Grid.ColumnDefinitions>
-                    <CheckBox Content="Minimize to system tray" Grid.Column="1"
+                    <CheckBox Content="Minimize to system tray"
                               Grid.Row="0" HorizontalContentAlignment="Left"
                               IsChecked="{Binding ElementName=mainWindow,
                                                   Path=MinimizeToTray,
                                                   Mode=TwoWay}"
-                              Margin="5" VerticalAlignment="Center"
-                              HorizontalAlignment="Left"/>
+                              Margin="5,12,0,12" VerticalAlignment="Center"
+                              HorizontalAlignment="Left" Grid.ColumnSpan="3"/>
                 </Grid>
             </ScrollViewer>
         </TabItem>
