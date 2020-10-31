@@ -225,9 +225,10 @@ namespace flexible_media_controller
                         break;
                 }
                 repeatModeBtn.IsEnabled = info.Controls.IsRepeatEnabled;
-                repeatModeBtn.Content = "Repeat: " + Enum.GetName(
-                    typeof(Windows.Media.MediaPlaybackAutoRepeatMode),
-                    info.AutoRepeatMode);
+                if (info.AutoRepeatMode != null)
+                    repeatModeBtn.Content = "Repeat: " + Enum.GetName(
+                        typeof(Windows.Media.MediaPlaybackAutoRepeatMode),
+                        info.AutoRepeatMode);
                 shuffleBtn.IsEnabled = info.Controls.IsShuffleEnabled;
                 shuffleBtn.Content = "Shuffle: " +
                     (info.IsShuffleActive == true ? "On" : "Off");
