@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Xml.Serialization;
 
 namespace flexible_media_controller
 {
-    public class HotkeyCombination : INotifyPropertyChanged
+    public class HotkeyCombination : INotifyPropertyChanged, ICloneable
     {
         public event PropertyChangedEventHandler PropertyChanged;
         private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
@@ -80,6 +77,11 @@ namespace flexible_media_controller
             Keys = new SortedSet<Key>();
             Capturing = false;
         }
+        object ICloneable.Clone()
+        {
+            return new HotkeyCombination(this);
+        }
+
         public HotkeyCombination(KeyboardCapture.KeyCapturedProc proc, int id,
                                  string label)
         {
@@ -87,6 +89,14 @@ namespace flexible_media_controller
             Id = id;
             Label = label;
             Reset();
+        }
+        public HotkeyCombination(HotkeyCombination other)
+        {
+            KeyCapturedProc = other.KeyCapturedProc;
+            Id = other.Id;
+            Label = other.Label;
+            Keys = new SortedSet<Key>(other.Keys);
+            Capturing = false;
         }
         public HotkeyCombination()
         {

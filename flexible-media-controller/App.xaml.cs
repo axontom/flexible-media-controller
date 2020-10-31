@@ -1,13 +1,10 @@
-﻿using Microsoft.Win32;
+﻿using flexible_media_controller.Properties;
+using Microsoft.Win32;
 using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
 using System.Diagnostics;
-using System.Linq;
+using System.IO;
 using System.Reflection;
 using System.Security.Principal;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace flexible_media_controller
@@ -65,6 +62,25 @@ namespace flexible_media_controller
             };
             System.Diagnostics.Process.Start(startInfo);
             Current.Shutdown();
+        }
+        public static string ApplicationDataDirectory
+        {
+            get
+            {
+                string path = Environment.GetFolderPath(
+                    Environment.SpecialFolder.ApplicationData);
+                path = Path.Combine(path, Name);
+                Directory.CreateDirectory(path);
+                return path;
+            }
+        }
+        public static string HotkeysSaveFile
+        {
+            get
+            {
+                return Path.Combine(ApplicationDataDirectory,
+                    Settings.Default.HotkeySaveFileName);
+            }
         }
     }
 }

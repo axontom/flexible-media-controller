@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:flexible_media_controller"
         mc:Ignorable="d"
         ResizeMode="CanResize" Icon="fmc.ico"
-        x:Name="mainWindow"
+        x:Name="mainWindow" Closing="MainWindow_Closing"
         Title="Flexible Media Controller" Height="800" Width="435" 
         MinWidth="435" MinHeight="200" MaxWidth="435">
     <TabControl TabStripPlacement="Top" >
@@ -175,7 +175,8 @@
                                              HorizontalAlignment="Stretch" Margin="5 1"
                                              Tag="{Binding Path=Id, Mode=OneWay}"
                                              KeyDown="HotkeyTB_KeyDown" Text="{Binding Path=Text, Mode=OneWay}"
-                                             GotFocus="HotkeyTB_GotFocus" LostFocus="HotkeyTB_LostFocus"/>
+                                             GotFocus="HotkeyTB_GotFocus" LostFocus="HotkeyTB_LostFocus"
+                                             TextChanged="HotkeyTB_TextChanged"/>
                                     <Button Content="Reset" Grid.Column="1"
                                             Margin="5 1"
                                             HorizontalAlignment="Stretch" 
@@ -217,14 +218,14 @@
                                                   Path=MinimizeToTray,
                                                   Mode=TwoWay}"
                               Margin="5" VerticalAlignment="Center"
-                              HorizontalAlignment="Left" Grid.ColumnSpan="3"/>
+                              HorizontalAlignment="Left"/>
                     <CheckBox Content="Run on startup"
                               Grid.Row="1" HorizontalContentAlignment="Left"
                               IsChecked="{Binding ElementName=mainWindow,
                                                   Path=RunOnStartUp,
                                                   Mode=TwoWay}"
                               Margin="5" VerticalAlignment="Center"
-                              HorizontalAlignment="Left" Grid.ColumnSpan="3"/>
+                              HorizontalAlignment="Left"/>
                 </Grid>
             </ScrollViewer>
         </TabItem>

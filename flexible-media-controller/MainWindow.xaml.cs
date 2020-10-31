@@ -1,37 +1,32 @@
-﻿using System;
+﻿using flexible_media_controller.Properties;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Xml;
 using System.Xml.Serialization;
-using Windows.ApplicationModel.Contacts;
-using Windows.Graphics.Imaging;
 using Windows.Media.Control;
 using Windows.System;
-using Windows.UI.Xaml.Media.Imaging;
 using BitmapImage = System.Windows.Media.Imaging.BitmapImage;
 using NotifyIcon = System.Windows.Forms.NotifyIcon;
-using System.Drawing;
-using System.Security.Principal;
-using System.Diagnostics;
 
 namespace flexible_media_controller
 {
+    static class Extensions
+    {
+        public static IList<T> Clone<T>(this IList<T> listToClone) where T : ICloneable
+        {
+            return listToClone.Select(item => (T)item.Clone()).ToList();
+        }
+    }
     public struct HotkeySave
     {
         public List<HotkeyCombination> Hotkeys { get; set; }
@@ -55,7 +50,6 @@ namespace flexible_media_controller
     /// </summary>
     public partial class MainWindow : Window
     {
-        private const string hotkeysSaveFile = "hotkeys.xml";
         private GlobalSystemMediaTransportControlsSession gsmtcsm;
         private KeyboardCapture keyboardCapture;
         private BindingList<HotkeyCombination> hotkeys;
@@ -63,9 +57,17 @@ namespace flexible_media_controller
         private NotifyIcon notifyIcon;
         private bool runOnStartUp;
 
-        public bool MinimizeToTray { get; set; } = true;
+        public bool MinimizeToTray
+        {
+            get => Settings.Default.MinimizeToTray;
+            set
+            {
+                Settings.Default.MinimizeToTray = value;
+                Settings.Default.Save();
+            }
+        }
         public bool RunOnStartUp
-        { 
+        {
             get => runOnStartUp;
             set
             {
@@ -83,7 +85,7 @@ namespace flexible_media_controller
                 {
                     App.RunOnStartUp = value;
                     runOnStartUp = App.RunOnStartUp;
-                }   
+                }
             }
         }
         public MainWindow()
@@ -91,16 +93,19 @@ namespace flexible_media_controller
             runOnStartUp = App.RunOnStartUp;
             notifyIcon = new NotifyIcon()
             {
-                Icon = new Icon(@"..\..\fmc.ico"),
+                Icon = new Icon(Application.GetResourceStream(
+                    new Uri("fmc.ico", UriKind.Relative)).Stream),
                 Visible = true,
             };
             notifyIcon.DoubleClick += NotifyIconDoubleClick;
             if (!LoadHotkeysFromFile())
                 savedHotkeys = EmptyHotkeyCombinationList();
-            hotkeys = new BindingList<HotkeyCombination>(savedHotkeys);
+            hotkeys = new BindingList<HotkeyCombination>(savedHotkeys.Clone());
             keyboardCapture = new KeyboardCapture();
             SaveBtn_Click();
             InitializeComponent();
+            SaveBtn.IsEnabled = false;
+            DiscardBtn.IsEnabled = false;
             HotKeyItemsControl.ItemsSource = hotkeys;
             ReloadSMTCSession();
         }
@@ -118,16 +123,16 @@ namespace flexible_media_controller
         private void SaveHotkeysToFile()
         {
             var serializer = new XmlSerializer(typeof(HotkeySave));
-            using (var writer = new XmlTextWriter(hotkeysSaveFile, Encoding.UTF8))
+            using (var writer = new XmlTextWriter(App.HotkeysSaveFile, Encoding.UTF8))
                 serializer.Serialize(writer, new HotkeySave(savedHotkeys));
         }
         private bool LoadHotkeysFromFile()
         {
-            if (!File.Exists(hotkeysSaveFile)) return false;
+            if (!File.Exists(App.HotkeysSaveFile)) return false;
 
             HotkeySave save;
             var serializer = new XmlSerializer(typeof(HotkeySave));
-            using (var reader = new XmlTextReader(hotkeysSaveFile))
+            using (var reader = new XmlTextReader(App.HotkeysSaveFile))
                 save = (HotkeySave)serializer.Deserialize(reader);
             save.Hotkeys = EmptyHotkeyCombinationList();
             savedHotkeys = save.ToHotkeyList();
@@ -315,8 +320,12 @@ namespace flexible_media_controller
                     comb.Reset();
                 }
             }
-            savedHotkeys = hotkeys.ToList();
+            savedHotkeys = new List<HotkeyCombination>(hotkeys.ToList().Clone());
             SaveHotkeysToFile();
+            if (SaveBtn != null)
+                SaveBtn.IsEnabled = false;
+            if (DiscardBtn != null)
+                DiscardBtn.IsEnabled = false;
         }
 
         private void UnbindAllBtn_Click(object sender, RoutedEventArgs e)
@@ -330,6 +339,8 @@ namespace flexible_media_controller
         {
             for (int i = 0; i < hotkeys.Count; i++)
                 hotkeys[i].Keys = savedHotkeys[i].Keys;
+            SaveBtn.IsEnabled = false;
+            DiscardBtn.IsEnabled = false;
         }
 
         private void RepeatModeBtn_Click(object sender = null,
@@ -364,6 +375,17 @@ namespace flexible_media_controller
         public void ToggleShuffle()
         {
             ShuffleBtn_Click();
+        }
+
+        private void HotkeyTB_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            SaveBtn.IsEnabled = true;
+            DiscardBtn.IsEnabled = true;
+        }
+
+        private void MainWindow_Closing(object sender, CancelEventArgs e)
+        {
+            notifyIcon.Dispose();
         }
     }
 }
