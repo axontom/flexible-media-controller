@@ -109,6 +109,20 @@ namespace flexible_media_controller
             HotKeyItemsControl.ItemsSource = hotkeys;
             ReloadSMTCSession();
         }
+
+        public void DisplayWarning(string message)
+        {
+            warningTBl.Text = message;
+            warningBorder.Height = 50;
+            warningBorder.Visibility = Visibility.Visible;
+        }
+
+        public void HideWarning()
+        {
+            warningBorder.Height = 0;
+            warningBorder.Visibility = Visibility.Hidden;
+        }
+
         private void NotifyIconDoubleClick(object sender, EventArgs args)
         {
             Show();
@@ -163,10 +177,26 @@ namespace flexible_media_controller
                                       "Toggle Shuffle")
             };
         }
+        private void DisablePlaybackButtons()
+        {
+            playToggleBtn.IsEnabled = false;
+            nextBtn.IsEnabled = false;
+            prevBtn.IsEnabled = false;
+            shuffleBtn.IsEnabled = false;
+            repeatModeBtn.IsEnabled = false;
+        }
         private void ReloadSMTCSession()
         {
             gsmtcsm = MediaController.Init();
-            GetMediaPropetries();
+            if (gsmtcsm is null)
+            {
+                DisplayWarning("No compatible application found.\n"
+                                + "Hit Refresh button to try again.");
+                DisablePlaybackButtons();
+                return;
+            }
+            HideWarning();
+            _ = GetMediaPropetries();
             UpdatePlaybackInfo();
             gsmtcsm.MediaPropertiesChanged += UpdateMediaProperties;
             gsmtcsm.PlaybackInfoChanged += UpdatePlaybackInfo;
@@ -174,7 +204,7 @@ namespace flexible_media_controller
         private async Task GetMediaPropetries()
         {
             var mediaProperties = await gsmtcsm.TryGetMediaPropertiesAsync();
-            Dispatcher.Invoke(async () =>
+            _ = Dispatcher.Invoke(async () =>
             {
                 titleTB.Text = mediaProperties.Title;
                 subtitleTB.Text = mediaProperties.Subtitle;
@@ -202,7 +232,7 @@ namespace flexible_media_controller
         private void UpdateMediaProperties(object sender,
             MediaPropertiesChangedEventArgs e)
         {
-            GetMediaPropetries();
+            _ = GetMediaPropetries();
         }
         private void UpdatePlaybackInfo(object sender = null,
             PlaybackInfoChangedEventArgs e = null)
