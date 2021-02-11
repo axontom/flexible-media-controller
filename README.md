@@ -21,7 +21,7 @@
 ## Dependencies
 - Windows 10 Build 17763 or newer
 - .NET Framework 4.7.2
-**FMC** uses Windows SystemMediaTransportControls to control media playback and receive media information, so it will work only with applications that support SMTC.
+**FMC** uses Windows SystemMediaTransportControls to control media playback and receive media information, so it will work only with applications that support SMTC (i.e. Spotify, Firefox).
 
 ## Contact
 You can contact me by email at axontom.online@gmail.com.
