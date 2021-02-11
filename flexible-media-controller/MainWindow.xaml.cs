@@ -91,13 +91,7 @@ namespace flexible_media_controller
         public MainWindow()
         {
             runOnStartUp = App.RunOnStartUp;
-            notifyIcon = new NotifyIcon()
-            {
-                Icon = new Icon(Application.GetResourceStream(
-                    new Uri("fmc.ico", UriKind.Relative)).Stream),
-                Visible = true,
-            };
-            notifyIcon.DoubleClick += NotifyIconDoubleClick;
+            CreateNotifyIcon();
             if (!LoadHotkeysFromFile())
                 savedHotkeys = EmptyHotkeyCombinationList();
             hotkeys = new BindingList<HotkeyCombination>(savedHotkeys.Clone());
@@ -123,10 +117,42 @@ namespace flexible_media_controller
             warningBorder.Visibility = Visibility.Hidden;
         }
 
-        private void NotifyIconDoubleClick(object sender, EventArgs args)
+        private void CreateNotifyIcon()
         {
-            Show();
+            var contextMenu = new System.Windows.Forms.ContextMenu();
+            contextMenu.MenuItems.AddRange(
+                new System.Windows.Forms.MenuItem[]
+                {
+                    new System.Windows.Forms.MenuItem() { Index = 0, Text = "Open" },
+                    new System.Windows.Forms.MenuItem() { Index = 1, Text = "Minimize to Tray" },
+                    new System.Windows.Forms.MenuItem() { Index = 1, Text = "Exit" }
+                });
+            contextMenu.MenuItems[0].Click += NotifyIconOpen;
+            contextMenu.MenuItems[1].Click += NotifyIconMinimize;
+            contextMenu.MenuItems[2].Click += NotifyIconExit;
+            notifyIcon = new NotifyIcon()
+            {
+                Icon = new Icon(Application.GetResourceStream(
+                    new Uri("fmc.ico", UriKind.Relative)).Stream),
+                Visible = true,
+                ContextMenu = contextMenu,
+                Text = "Flexible Media Controller"
+            };
+            notifyIcon.DoubleClick += NotifyIconOpen;
+        }
+        private void NotifyIconExit(object sender, EventArgs args)
+        {
+            Close();
+        }
+        private void NotifyIconOpen(object sender, EventArgs args)
+        {
             WindowState = WindowState.Normal;
+            Visibility = Visibility.Visible;
+        }
+        private void NotifyIconMinimize(object sender, EventArgs args)
+        {
+            Hide();
+            WindowState = WindowState.Minimized;
         }
         protected override void OnStateChanged(EventArgs e)
         {
